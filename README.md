@@ -11,35 +11,34 @@ This repository contains automated tests for the DemoQA website using the Cypres
 
 ### WebTables
 
-- *Adding a New Record:*
+[Add Record in WebTables](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/addWebTableTests.cy.js)
   - The test script adds a new record to the WebTables and asserts it for both positive and negative scenarios .
 
-- *Editing an Existing Record:*
+[Editing record in the table](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/editWebtableTests.cy.js)  
   - The test script edits an existing record in the WebTables and verifies the changes.
 
 ### PracticeForm
 
-- *Form Value Validation:*
+[Validate Practice Form](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/practiceFormTests.cy.js)  
   - The test script validates the entered values in the PracticeForm.
 
 ### Progres Bar
-
-- *Progress Bar Operations:*
+**[Progres Bar](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/progressBarTests.cy.js)**
   - The test script covers the functionalities of starting, stopping, and resetting the Progres Bar.
 
 ## API Testing
 
 ### BookStore API
 
-- *Login:*
+**[Bookstore Login](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/loginTests.cy.js)**
   - Positive test cases for successful login.
   - Negative test cases for unsuccessful login scenarios.
 
-- *Registration:*
+**[Bookstore Resgistration](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/registrationTests.cy.js)**
   - Positive test cases for successful user registration.
   - Negative test cases for unsuccessful registration scenarios.
 
-- *Books:*
+**[Bookstore - managing Books](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/booksTests.cy.js)**
   - Adding and deleting books from user profiles.
   - Positive and negative test cases for book management.
 
