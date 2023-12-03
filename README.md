@@ -11,15 +11,15 @@ This repository contains automated tests for the DemoQA website using the Cypres
 
 ### WebTables
 
-[Add Record in WebTables](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/addWebTableTests.cy.js)
+**[Add Record in WebTables](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/addWebTableTests.cy.js)**
   - The test script adds a new record to the WebTables and asserts it for both positive and negative scenarios .
 
-[Editing record in the table](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/editWebtableTests.cy.js)  
+**[Editing record in the table](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/editWebtableTests.cy.js)**  
   - The test script edits an existing record in the WebTables and verifies the changes.
 
 ### PracticeForm
 
-[Validate Practice Form](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/practiceFormTests.cy.js)  
+**[Validate Practice Form](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/practiceFormTests.cy.js)** 
   - The test script validates the entered values in the PracticeForm.
 
 ### Progres Bar
