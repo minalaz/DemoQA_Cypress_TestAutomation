@@ -1,35 +1,38 @@
 /// <reference types="Cypress" />
+import { generateUserCredentials } from "../methods/generateUserCredentials.js";
 import { requestMethods } from "../methods/requestMethods.js";
 import { consts } from "../methods/consts.js";
+
 const registerUrl = "https://demoqa.com/Account/v1/User";
 const loginUrl = "https://demoqa.com/Account/v1/GenerateToken";
 const addBookUrl = "https://demoqa.com/BookStore/v1/Books";
 
-const userData = {
-  userName: "RIMaZa634yT9ac10Bc",
-  password: "Tes@12345678",
-};
+const userData = generateUserCredentials.randomizedGoodCredentials();
 const bookISBN = "9781449325862";
 const bookISBN2 = "9781449331818";
 
 describe("Bookstore - managing books ", () => {
   let userId;
   let token;
+  let originalUserData = userData;
 
   beforeEach("Register and login user", () => {
     requestMethods.postRequest(registerUrl, userData).then((response) => {
-      expect(response.status).to.eq(201); //assert that Status is "Created" (Status code = 201)
+      expect(response.status).to.eq(201); // assert that Status is "Created" (Status code = 201)
       userId = response.body.userID;
-
-      requestMethods.postRequest(loginUrl, userData).then((tokenResponse) => {
-        expect(tokenResponse.status).to.be.eq(200); //assert that Status is "OK" (Status code = 200)
-        expect(tokenResponse.body).to.have.property("token"); //assert that token is visible in the response body
-        token = tokenResponse.body.token;
-      });
+      console.log(originalUserData);
+      requestMethods
+        .postRequest(loginUrl, originalUserData)
+        .then((tokenResponse) => {
+          expect(tokenResponse.status).to.be.eq(200); // assert that Status is "OK" (Status code = 200)
+          expect(tokenResponse.body).to.have.property("token"); // assert that token is visible in the response body
+          token = tokenResponse.body.token;
+        });
     });
   });
   afterEach("Delete user", () => {
     requestMethods.deleteRequest(registerUrl + "/" + userId, token);
+    cy.clearCookies();
   });
   it("Add a book, get it and assert it", () => {
     requestMethods
