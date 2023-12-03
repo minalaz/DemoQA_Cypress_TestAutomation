@@ -1,0 +1,787 @@
+{
+	"info": {
+		"_postman_id": "79372a07-aca9-4655-a091-a057433200ae",
+		"name": "BookStore_API_Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26035351"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"item": [
+				{
+					"name": "Register User With Valid credentials",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"_userName\", pm.variables.replaceIn('{{$randomFirstName}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"_userId\", jsonData.userID);\r",
+									"pm.test(\"Assert status code\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_userName}}\",\r\n    \"password\": \"{{_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_userUrl}}",
+							"host": [
+								"{{_userUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User With Invalid Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assert status code\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+									"});\r",
+									"pm.test(\"Assert error message is visible in response body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_badUserName}}\",\r\n    \"password\": \"{{_badPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_userUrl}}",
+							"host": [
+								"{{_userUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User Without Any Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Assert that Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Assert error message in response body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"UserName and Password required.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{_userUrl}}",
+							"host": [
+								"{{_userUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register with allreadyRegisteredUserData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assert that Status Code 406\", function () {\r",
+									"    pm.response.to.have.status(406);\r",
+									"});\r",
+									"pm.test(\"Assert that error message in response body is visible\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User exists!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_usedUserName}}\",\r\n    \"password\": \"{{_usedPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_userUrl}}",
+							"host": [
+								"{{_userUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BookStore Login",
+			"item": [
+				{
+					"name": "Login With Valid Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"_token\", jsonData.token);\r",
+									"pm.test(\"Assert that Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Asert that token is visible in response body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_userName}}\",\r\n    \"password\": \"{{_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_loginUrl}}",
+							"host": [
+								"{{_loginUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assert that Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_userName}}\",\r\n    \"password\": \"{{_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_authorizedUrl}}",
+							"host": [
+								"{{_authorizedUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Without Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assert that Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Assert that error message is visible in response body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"UserName and Password required.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{_loginUrl}}",
+							"host": [
+								"{{_loginUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login With Invalid Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assert that Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Assert failed authorization, null token, and failed status \", function () {\r",
+									"    var jsonData = pm.response.json({\"token\": null,\r",
+									"    \"expires\": null,\r",
+									"    \"status\": \"Failed\",\r",
+									"    \"result\": \"User authorization failed.\"});\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{_badUserName}}\",\r\n    \"password\": \"{{_badPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_loginUrl}}",
+							"host": [
+								"{{_loginUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BookStore API",
+			"item": [
+				{
+					"name": "Add, get, delete books",
+					"item": [
+						{
+							"name": "All books",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"_bookISBN\", jsonData.books[0].isbn);\r",
+											"\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"_bookISBN2\", jsonData.books[1].isbn);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{_bookStoreUrl}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert that Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"{{_userId}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{_bookISBN}}\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{_bookStoreUrl}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Added Book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Assert that body contains a book title\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Git Pocket Guide\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{_userUrl}}/{{_userId}}",
+									"host": [
+										"{{_userUrl}}"
+									],
+									"path": [
+										"{{_userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert that Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"isbn\": \"{{_bookISBN}}\",\r\n  \"userId\": \"{{_userId}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{_oneBookUrl}}",
+									"host": [
+										"{{_oneBookUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adding Two Books",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert that Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Assert response body contains isbn's of two books\", function () {\r",
+											"    var jsonData = pm.response.json({\r",
+											"    \"books\": [\r",
+											"        {\r",
+											"            \"isbn\": \"9781449325862\"\r",
+											"        },\r",
+											"        {\r",
+											"            \"isbn\": \"9781449331818\"\r",
+											"        }\r",
+											"    ]\r",
+											"});\r",
+											"    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"userId\": \"{{_userId}}\",\r\n      \"collectionOfIsbns\": [\r\n        {\r\n          \"isbn\": \"{{_bookISBN}}\"\r\n        },\r\n        {\r\n          \"isbn\": \"{{_bookISBN2}}\"\r\n        }\r\n      ]\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{_bookStoreUrl}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deleting books with Authorization",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert that Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"pm.test(\"Assert that Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{_bookStoreUrl}}?UserId={{_userId}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									],
+									"query": [
+										{
+											"key": "UserId",
+											"value": "{{_userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add book without Authorization",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User not authorized!\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"{{_userId}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{_bookISBN}}\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{_bookStoreUrl}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete request Without Authorization",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert thatStatus code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"pm.test(\"Assert that response body contains a string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User not authorized!\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{_bookStoreUrl}}?UserId={{_userId}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									],
+									"query": [
+										{
+											"key": "UserId",
+											"value": "{{_userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deleting books with invalid url",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Assert that Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"pm.test(\"Assert error message in response body\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User Id not correct!\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{_bookStoreUrl}}",
+									"host": [
+										"{{_bookStoreUrl}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "_userUrl",
+			"value": "https://demoqa.com/Account/v1/User",
+			"type": "string"
+		},
+		{
+			"key": "_userName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_password",
+			"value": "MSr563829@#$@!!bhcsr",
+			"type": "string"
+		},
+		{
+			"key": "_badUserName",
+			"value": "ta",
+			"type": "string"
+		},
+		{
+			"key": "_badPassword",
+			"value": "jjljo",
+			"type": "string"
+		},
+		{
+			"key": "_usedUserName",
+			"value": "minaCuraFina",
+			"type": "string"
+		},
+		{
+			"key": "_usedPassword",
+			"value": "Mina123!@#srce",
+			"type": "string"
+		},
+		{
+			"key": "_loginUrl",
+			"value": "https://demoqa.com/Account/v1/GenerateToken",
+			"type": "string"
+		},
+		{
+			"key": "_goodUserName",
+			"value": "validUser@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "_bookStoreUrl",
+			"value": "https://demoqa.com/BookStore/v1/Books",
+			"type": "string"
+		},
+		{
+			"key": "_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_bookISBN",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_bookISBN2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_authorizedUrl",
+			"value": "https://demoqa.com/Account/v1/Authorized",
+			"type": "string"
+		},
+		{
+			"key": "_userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_oneBookUrl",
+			"value": "https://demoqa.com/BookStore/v1/Book",
+			"type": "string"
+		}
+	]
+}
