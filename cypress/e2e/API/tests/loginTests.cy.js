@@ -25,7 +25,7 @@ describe("Bookstore Login", () => {
     });
   });
   it("Login without credentials", () => {
-    requestMethods.postRequest(loginURL, "null").then((response) => {
+    requestMethods.postRequest(loginURL, null).then((response) => {
       expect(response.status).to.be.eq(400); //assert that Status is "Not acceptable" (Status code: 400)
       expect(response)
         .property("body")
