@@ -5,7 +5,7 @@
 
 ## Overview
 
-This repository contains automated tests for the DemoQA website using the Cypress framework in JavaScript. The tests cover both UI and API testing scenarios. For UI testing, various functionalities of the [DemoQA](https://demoqa.com/) website, such as WebTables, Practice Form, and Progres Bar, were automated. Additionally, API testing was performed on the BookStore API, including Login, Registration, and managing books on user profiles.
+This repository contains automated tests for the [DemoQA](https://demoqa.com/) website, using the Cypress framework in JavaScript. The tests cover both UI and API testing scenarios. For UI testing, various functionalities of the DemoQA website, such as WebTables, Practice Form, and Progres Bar, were automated. Additionally, API testing was performed on the BookStore API, including Login, Registration, and managing books on user profiles.
 
 ## UI Testing
 
@@ -34,7 +34,7 @@ This repository contains automated tests for the DemoQA website using the Cypres
   - Positive test cases for successful login.
   - Negative test cases for unsuccessful login scenarios.
 
-**[Bookstore Resgistration](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/registrationTests.cy.js)**
+**[Bookstore Registration](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/registrationTests.cy.js)**
   - Positive test cases for successful user registration.
   - Negative test cases for unsuccessful registration scenarios.
 
@@ -71,7 +71,7 @@ Before running the tests, ensure that you have the following set up on your mach
 2. Import the test collection file located in the project directory: DemoQA.postman_collection.json.  
 3. Run the imported collection to execute the API tests.
    
-**To run Postman tests in VSCode:**
+**To run the Postman tests in VSCode:**
 1. **Execute the command to install Newman, tool for running Postman collection:**
    ```bash
    npm install -g newman
