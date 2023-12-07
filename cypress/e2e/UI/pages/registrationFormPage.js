@@ -1,7 +1,5 @@
 /// <reference types='Cypress'/>
 
-import { randomizingData } from "./randomizingData";
-
 export const registrationFormPage = {
   buttons: {
     submitButton: "#submit",
@@ -32,14 +30,23 @@ export const registrationFormPage = {
     cy.get(this.labels.salaryField).clear();
     cy.get(this.labels.departmentField).clear();
   },
-  addingRandomizedDataInForm() {
-    this.fillRegistrationForm(
-      randomizingData.generateRandomString(5),
-      randomizingData.generateRandomString(6),
-      randomizingData.randomizeEmail("example.com"),
-      randomizingData.randomizeNumber(2),
-      randomizingData.randomizeNumber(5),
-      randomizingData.generateRandomString(8)
-    );
+
+  assertDataIsEntered(firstName, lastName, email, age, salary, department) {
+    cy.get(this.labels.firstNameField)
+      .invoke("prop", "value")
+      .should("contain", firstName);
+    cy.get(this.labels.lastNameField)
+      .invoke("prop", "value")
+      .should("contain", lastName);
+    cy.get(this.labels.emailField)
+      .invoke("prop", "value")
+      .should("contain", email);
+    cy.get(this.labels.ageField).invoke("prop", "value").should("contain", age);
+    cy.get(this.labels.salaryField)
+      .invoke("prop", "value")
+      .should("contain", salary);
+    cy.get(this.labels.departmentField)
+      .invoke("prop", "value")
+      .should("contain", department);
   },
 };
