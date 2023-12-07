@@ -5,41 +5,40 @@
 
 ## Overview
 
-This repository contains automated tests for the DemoQA website using the Cypress framework in JavaScript. The tests cover both UI and API testing scenarios. For UI testing, various functionalities of the [DemoQA](https://demoqa.com/) website, such as WebTables, Practice Form, and Progres Bar, were automated. Additionally, API testing was performed on the BookStore API, including Login, Registration, and managing books on user profiles.
+This repository contains automated tests for the [DemoQA](https://demoqa.com/) website, using the Cypress framework in JavaScript. The tests cover both UI and API testing scenarios. For UI testing, various functionalities of the DemoQA website, such as WebTables, Practice Form, and Progres Bar, were automated. Additionally, API testing was performed on the BookStore API, including Login, Registration, and managing books on user profiles.
 
 ## UI Testing
 
 ### WebTables
 
-- *Adding a New Record:*
+**[Add Record in WebTables](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/addWebTableTests.cy.js)**
   - The test script adds a new record to the WebTables and asserts it for both positive and negative scenarios .
 
-- *Editing an Existing Record:*
+**[Editing record in the table](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/editWebtableTests.cy.js)**  
   - The test script edits an existing record in the WebTables and verifies the changes.
 
 ### PracticeForm
 
-- *Form Value Validation:*
+**[Validate Practice Form](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/practiceFormTests.cy.js)** 
   - The test script validates the entered values in the PracticeForm.
 
 ### Progres Bar
-
-- *Progress Bar Operations:*
+**[Progres Bar](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/UI/tests/progressBarTests.cy.js)**
   - The test script covers the functionalities of starting, stopping, and resetting the Progres Bar.
 
 ## API Testing
 
 ### BookStore API
 
-- *Login:*
+**[Bookstore Login](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/loginTests.cy.js)**
   - Positive test cases for successful login.
   - Negative test cases for unsuccessful login scenarios.
 
-- *Registration:*
+**[Bookstore Registration](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/registrationTests.cy.js)**
   - Positive test cases for successful user registration.
   - Negative test cases for unsuccessful registration scenarios.
 
-- *Books:*
+**[Bookstore - managing Books](https://github.com/minalaz/DemoQA_Cypress_TestAutomation/blob/main/cypress/e2e/API/tests/booksTests.cy.js)**
   - Adding and deleting books from user profiles.
   - Positive and negative test cases for book management.
 
@@ -72,7 +71,7 @@ Before running the tests, ensure that you have the following set up on your mach
 2. Import the test collection file located in the project directory: DemoQA.postman_collection.json.  
 3. Run the imported collection to execute the API tests.
    
-**To run Postman tests in VSCode:**
+**To run the Postman tests in VSCode:**
 1. **Execute the command to install Newman, tool for running Postman collection:**
    ```bash
    npm install -g newman
